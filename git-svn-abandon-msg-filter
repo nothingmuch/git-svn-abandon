@@ -1,0 +1,28 @@
+#!/usr/bin/perl -n
+
+next if /^git-svn-id:/;
+
+# if this is a merge commit, rewrite the message to have a better "subject"
+if ( $. == 1 and /^\s*r\d+\@.*\(orig r\d+\):/ ) {
+	print "Merge\n\n";
+
+	# print the original message
+	s/^ //;
+	print;
+
+	while (<>) {
+		next if /^git-svn-id:/;
+		s/^ //;
+		print;
+	}
+
+	exit;
+}
+
+# cleanup svk junk in non
+$strip++, next if /^\s*r\d+\@.*:.*\|/;
+s/^ // if $strip; # svk prepends a leading space
+
+
+print;
+
