@@ -1,0 +1,11 @@
+1. git svn clone your repo, preferably using http://github.com/samv/git/tree/svn-merge-attrs
+2. inside the repo run svn_fix_refs.sh
+3. create .git/info/grafts for merge commits (might not be necessary with the svn-merge-attrs branch)
+4. run svn_cleanup.sh
+
+the resulting repository has only refs/heads/* and tags
+
+all svn tags are recreated as annotated tags
+
+git-svn-id and svk message pollution is cleaned up
+
