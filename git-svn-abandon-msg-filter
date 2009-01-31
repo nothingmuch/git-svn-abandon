@@ -1,28 +1,51 @@
-#!/usr/bin/perl -n
+#!/usr/bin/perl
 
-next if /^git-svn-id:/;
+my $svn_id;
+my $msg = '';
 
-# if this is a merge commit, rewrite the message to have a better "subject"
-if ( $. == 1 and /^\s*r\d+\@.*\(orig r\d+\):/ ) {
-	print "Merge\n\n";
-
-	# print the original message
-	s/^ //;
-	print;
-
-	while (<>) {
-		next if /^git-svn-id:/;
-		s/^ //;
-		print;
+while (<>) {
+	if ( /^git-svn-id: (.*)/ ) {
+		$svn_id = $1;
+	} else {
+		$msg .= $_;
 	}
-
-	exit;
 }
 
-# cleanup svk junk in non
-$strip++, next if /^\s*r\d+\@.*:.*\|/;
-s/^ // if $strip; # svk prepends a leading space
+# if this is a merge commit, rewrite the message to have a better "subject"
+if ( $msg =~ /^\s*r\d+\@.*\(orig r\d+\):/ ) {
+	# print the original message
+	$msg =~ s/^ //mg;
 
+	my ( $to, @from ) = ( split /\s+/, `git show -s --pretty='format:%P' $ENV{GIT_COMMIT}` );
 
-print;
+	print (
+		"Merge ",
+		join(", ", map { format_branch($_) } @from),
+		" into ",
+		format_branch($to),
+		"\n\n",
+		$msg,
+	);
+} else {
+	if ( $msg =~ s/^\s*r\d+\@.*:.*$//m ) {
+		$msg =~ s/^ //mg;
+	}
 
+	print $msg;
+}
+
+sub format_branch {
+	my $commit = shift;
+
+	my $body = `git show -s --pretty='format:%b' $commit`;
+
+	if ( $body =~ m{git-svn-id: .*/branches/(.*?)\@} ) {
+		return "'$1'";
+	} elsif ( $body =~ m{git-svn-id: .*/trunk\@} ) {
+		return "'trunk'";
+	} elsif ( $body =~ /\@r(\d+)/ ) {
+		return $1;
+	} else {
+		die "unknown rev for $commit";
+	}
+}
