@@ -1,3 +1,7 @@
+See [my detailed blog post](http://blog.woobling.org/2009/06/git-svn-abandon.html) for a how-to.
+
+In brief:
+
 1. git svn clone your repo, preferably using Sam Vilain's [svn-merge-attrs branch](http://github.com/samv/git/tree/svn-merge-attrs), using `--prefix svn`. This assumes standard layout.
 2. inside the repo run `git svn-abandon-fix-refs`
 3. create `.git/info/grafts` for merge commits (might not be necessary with the svn-merge-attrs branch).
@@ -9,3 +13,8 @@ all svn tags are recreated as annotated tags
 
 `git-svn-id:` and svk message pollution is cleaned up
 
+
+adding grafts entries:
+
+When you have a merge commit that is not recognized as such, the grafts file
+can be used to add additional parents, preserving history information.
