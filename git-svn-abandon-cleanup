@@ -4,7 +4,7 @@
 git filter-branch --tag-name-filter cat --msg-filter "git svn-abandon-msg-filter" -- --all
 
 # remove the backup refs
-git for-each-ref --format='%(refname)' refs/original/ | while read ref; do
+git for-each-ref --format='%(refname)' refs/original/ refs/remotes/svn/ | while read ref; do
     git update-ref -d "$ref"
 done
 
