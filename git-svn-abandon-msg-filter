@@ -1,5 +1,8 @@
 #!/usr/bin/perl
 
+use strict;
+use warnings;
+
 my $svn_id;
 my $msg = '';
 
@@ -18,14 +21,12 @@ if ( $msg =~ /^\s*r\d+\@.*\(orig r\d+\):/ ) {
 
 	my ( $to, @from ) = ( split /\s+/, `git show -s --pretty='format:%P' $ENV{GIT_COMMIT}` );
 
-	print (
-		"Merge ",
-		join(", ", map { format_branch($_) } @from),
-		" into ",
-		format_branch($to),
-		"\n\n",
-		$msg,
-	);
+	print "Merge ",
+		  join(", ", map { format_branch($_) } @from),
+		  " into ",
+		  format_branch($to),
+		  "\n\n",
+		  $msg;
 } else {
 	if ( $msg =~ s/^\s*r\d+\@.*:.*$//m ) {
 		$msg =~ s/^ //mg;
