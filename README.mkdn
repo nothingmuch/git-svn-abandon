@@ -1,20 +1,34 @@
-See [my detailed blog post](http://blog.woobling.org/2009/06/git-svn-abandon.html) for a how-to.
+Installation:
+=============
+
+Place these scripts anywhere in `$PATH` (e.g. create symlinks in
+`/usr/local/bin`) and make sure they are executable, just like any other
+script. The `git` command will know how to find them.
+
+
+Usage:
+======
+
+See [my detailed blog
+post](http://blog.woobling.org/2009/06/git-svn-abandon.html) for a how-to.
 
 In brief:
 
-1. git svn clone your repo, preferably using Sam Vilain's [svn-merge-attrs branch](http://github.com/samv/git/tree/svn-merge-attrs), using `--prefix svn`. This assumes standard layout.
+1. git svn clone your repo, preferably using Sam Vilain's [svn-merge-attrs
+   branch](http://github.com/samv/git/tree/svn-merge-attrs), using `--prefix
+   svn`.  This assumes standard layout.
+
 2. inside the repo run `git svn-abandon-fix-refs`
-3. create `.git/info/grafts` for merge commits (might not be necessary with the svn-merge-attrs branch).
+
+3. create `.git/info/grafts` for merge commits (might not be necessary with the
+   svn-merge-attrs branch).
+
 4. run `git svn-abandon-cleanup`
 
-the resulting repository has only `refs/heads/*` and tags
+The resulting repository should have only `refs/heads/*` and tags. All svn tags
+are recreated as annotated tags.
 
-all svn tags are recreated as annotated tags
-
-`git-svn-id:` and svk message pollution is cleaned up
-
-
-adding grafts entries:
+`git-svn-id:` and svk message pollution is cleaned up.
 
 When you have a merge commit that is not recognized as such, the grafts file
 can be used to add additional parents, preserving history information.
