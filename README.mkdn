@@ -21,8 +21,9 @@ In brief:
 
 2. inside the repo run `git svn-abandon-fix-refs`
 
-3. create `.git/info/grafts` for merge commits (might not be necessary with the
-   svn-merge-attrs branch).
+3. create `.git/info/grafts` file for merge commits 
+  (might not be necessary with the svn-merge-attrs branch).
+  This is just if you have any svn merges that occurred between branches.
 
 4. run `git-svn-abandon-cleanup`
 
