@@ -14,16 +14,17 @@ post](http://blog.woobling.org/2009/06/git-svn-abandon.html) for a how-to.
 
 In brief:
 
-1. git svn clone your repo, preferably using Sam Vilain's [svn-merge-attrs
-   branch](http://github.com/samv/git/tree/svn-merge-attrs), using `--prefix
-   svn`.  This assumes standard layout.
+1. Install (above), then git svn clone your repo, preferably 
+   using Sam Vilain's [svn-merge-attrs branch]
+   (http://github.com/samv/git/tree/svn-merge-attrs), using 
+   `--prefix svn`.  This assumes standard layout.
 
 2. inside the repo run `git svn-abandon-fix-refs`
 
 3. create `.git/info/grafts` for merge commits (might not be necessary with the
    svn-merge-attrs branch).
 
-4. run `git svn-abandon-cleanup`
+4. run `git-svn-abandon-cleanup`
 
 The resulting repository should have only `refs/heads/*` and tags. All svn tags
 are recreated as annotated tags.
@@ -32,3 +33,11 @@ are recreated as annotated tags.
 
 When you have a merge commit that is not recognized as such, the grafts file
 can be used to add additional parents, preserving history information.
+
+Troubleshooting:
+=======
+ % git svn-abandon-fix-refs
+
+git: 'svn-abandon-fix-refs' is not a git-command. See 'git --help'.
+
+means you haven't placed those scripts in your path.
