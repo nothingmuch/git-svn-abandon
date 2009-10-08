@@ -42,3 +42,9 @@ Troubleshooting:
 git: 'svn-abandon-fix-refs' is not a git-command. See 'git --help'.
 
 means you haven't placed those scripts in your path.
+
+Maintenance:
+=======
+These commands are more for abandoning SVN in favour of git and getting as clean a history as possible.
+
+Maintenance is just like a normal git repository, after git svn-abandon-cleanup has been run git svn rebase can't be run anymore, so you can't bring it up to date without keeping the old svn repo around and grafting things to the conversion.
