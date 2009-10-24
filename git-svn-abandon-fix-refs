@@ -2,6 +2,8 @@
 
 # clean up working dir
 
+git update-ref -d master
+
 # create annotated tags out of svn tags
 git for-each-ref --format='%(refname)' refs/remotes/svn/tags/* | while read tag_ref; do
     tag=${tag_ref#refs/remotes/svn/tags/}
