@@ -9,26 +9,27 @@ script. The `git` command will know how to find them.
 Usage:
 ======
 
-See [my detailed blog
-post](http://blog.woobling.org/2009/06/git-svn-abandon.html) for a how-to.
+See [my detailed blog post][1] for a how-to.
+
+[1]: http://blog.woobling.org/2009/06/git-svn-abandon.html
 
 In brief:
 
-1. Install (above), then git svn clone your repo, preferably 
+1. Install (above), then git svn clone your repo, preferably
    using Sam Vilain's [svn-merge-attrs branch]
-   (http://github.com/samv/git/tree/svn-merge-attrs), using 
+   (http://github.com/samv/git/tree/svn-merge-attrs), using
    `--prefix svn`.  This assumes standard layout.
 
-2. inside the repo run `git svn-abandon-fix-refs`
+2. Inside the repo run `git svn-abandon-fix-refs`
 
-3. create `.git/info/grafts` file for merge commits 
-  (might not be necessary with the svn-merge-attrs branch).
-  This is just if you have any svn merges that occurred between branches.
+3. Create `.git/info/grafts` file for merge commits
+   (might not be necessary with the svn-merge-attrs branch).
+   This is just if you have any svn merges that occurred between branches.
 
-4. run `git-svn-abandon-cleanup`
+4. Run `git-svn-abandon-cleanup`
 
-The resulting repository should have only `refs/heads/*` and tags. All svn tags
-are recreated as annotated tags.
+The resulting repository should have only `refs/heads/*` and tags.
+All svn tags are recreated as annotated tags.
 
 `git-svn-id:` and svk message pollution is cleaned up.
 
@@ -37,14 +38,20 @@ can be used to add additional parents, preserving history information.
 
 Troubleshooting:
 =======
- % git svn-abandon-fix-refs
 
-git: 'svn-abandon-fix-refs' is not a git-command. See 'git --help'.
+You may get this error message:
 
-means you haven't placed those scripts in your path.
+    % git svn-abandon-fix-refs
+    git: 'svn-abandon-fix-refs' is not a git-command. See 'git --help'.
+
+This means you haven't placed those scripts in your `PATH`.
 
 Maintenance:
 =======
-These commands are more for abandoning SVN in favour of git and getting as clean a history as possible.
 
-Maintenance is just like a normal git repository, after git svn-abandon-cleanup has been run git svn rebase can't be run anymore, so you can't bring it up to date without keeping the old svn repo around and grafting things to the conversion.
+These commands are more for abandoning SVN in favour of git and getting as
+clean a history as possible. Maintenance is just like a normal git repository.
+
+After `git svn-abandon-cleanup` has been run, `git svn rebase` can't be run
+anymore, so you can't bring it up to date without keeping the old SVN repo
+around and grafting things to the conversion.
