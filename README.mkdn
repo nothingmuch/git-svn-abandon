@@ -46,6 +46,17 @@ You may get this error message:
 
 This means you haven't placed those scripts in your `PATH`.
 
+
+Alternatives
+=======
+
+If this script is too slow for a large repository, or doesn't handle something
+complicated look into Snerp Vortex:
+
+	http://github.com/rcaputo/snerp-vortex
+
+For a simpler approach, several `svn2git` scripts exist, in both Ruby and Perl.
+
 Maintenance:
 =======
 
