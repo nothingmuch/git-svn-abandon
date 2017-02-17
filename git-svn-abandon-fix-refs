@@ -11,7 +11,7 @@ git for-each-ref --format='%(refname)' refs/remotes/svn/tags/* | while read tag_
 
     # find the oldest ancestor for which the tree is the same
     parent_ref="$tag_ref";
-    while [ $( git rev-parse --quiet --verify "$parent_ref"^: ) = "$tree" ]; do
+    while [ "$( git rev-parse --quiet --verify "$parent_ref"^: )" = "$tree" ]; do
         parent_ref="$parent_ref"^
     done
     parent=$( git rev-parse "$parent_ref" );
